@@ -1,7 +1,7 @@
 // Token Radar entry (Node 22, standard library only).
 //
 // Reads the sealed snapshot from /input/snapshot.json (or --input), scores
-// every pre-token protocol with the category-fitted model in lib/model.ts,
+// every pre-token protocol with the radar-3 size curve in lib/model.ts,
 // writes the ranked board to /output/board.json and the dashboard data to
 // /output/data.js, copies dashboard/ and screenshots/ to /output, and writes
 // /output/dossier.json with the kit's vendored library.

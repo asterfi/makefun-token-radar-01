@@ -7,27 +7,37 @@
 A dashboard that ranks pre-token protocols by implied launch value, from the
 sealed DefiLlama snapshot (as_of 2026-11-14, 758 protocols, watchlist 40).
 
-## Model (radar-2)
+## Model (radar-3)
 
-Not the starter's flat 0.25x TVL. The multiple is fitted per category from the
-119 non-CEX protocols whose token already trades: median FDV/TVL per category,
-shrunk toward the global median 0.246x with weight n/(n+10), clamped to
-[0.05, 1.00]. A 40% launch haircut is applied. Growth (7d, clamped
-[-60, +120]%, weight 0.5) and maturity (age, 0.6–1.0) multiply in.
+Not the starter's flat 0.25x TVL. Implied value is fitted from the 92
+stand-alone traded tokens in the snapshot: a Huber log10 regression,
+log10(FDV) = 3.736 + 0.425 × log10(forward TVL), where forward TVL applies
+the 7-day change capped at ±20%. Size is the whole story — median FDV/TVL
+falls from 0.65x at $1–10M TVL to 0.008x above $10B, which a flat multiple
+cannot see. Implied value = curve value × launch odds, where odds are a
+survival reading from the category ever-rate and the token-record share by
+age. A category premium was tried with every shrinkage weight and rejected:
+it never improves the blind test.
 
-Out-of-sample (80/20, 3 trials): median absolute error 84–96%, vs 76–92%
-for the flat starter — the category model does not win on median error, but
-it cuts mean error and separates categories. The dashboard states this
-plainly; every implied value is a ranking with wide bars, not a price.
+Blind-tested, honestly: leave-one-out miss ×3.11 and walk-forward miss
+×2.32 (fit on older listings, test on newer ones), vs the flat starter at
+×4.20 / ×4.00. Bands come from leave-one-out residuals: P25–P75 ×/÷ 3.48,
+P10–P90 ×/÷ 10.66, holding 50% / 78% of actuals. Rank ranges come from 200
+bootstrap refits of the curve. Every implied value is a ranking with wide
+bars, not a price — the dashboard states this plainly.
 
 ## Board
 
-200 rows: all 40 watchlist protocols + 160 early pre-token protocols below
-the $50M floor, chosen by implied value (not TVL). Token-bearing protocols
-are kept out of the board and shown in a separate Live-token view (top 24 by
-market cap). Every row carries 6 costed farm steps and a verdict
-(FARM / THIN / SKIP) plus an illustrative EV per wallet (10% community
-share, 50,000 assumed farmers — stated assumptions).
+198 rows: all 40 watchlist protocols + 158 off-list pre-token protocols,
+ranked by implied value. The watchlist is the floor, never the ceiling.
+Only stand-alone pre-token protocols can be ranked: 416 token-bearing
+protocols, 43 bridges, 43 liquid staking / restaking, 42 exchange-custody
+and 16 versioned / wrapped products are set aside by rule and shown in the
+audit bar; the 24 live tokens are shown in a separate Live-token view.
+Verdicts are FARM 14 / THIN 64 / SKIP 120, from deposit-sized farm plans:
+slice = 7% drop share × implied value × deposit / TVL, less chain gas and
+yield forgone, with FARM at break-even ≤ 10% and THIN at ≤ 33%. Every row
+carries 8 costed farm steps with an exit rule and a review date.
 
 ## Run
 
