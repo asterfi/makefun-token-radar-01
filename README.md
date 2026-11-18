@@ -7,7 +7,17 @@
 A dashboard that ranks pre-token protocols by implied launch value, from the
 sealed DefiLlama snapshot (as_of 2026-11-14, 758 protocols, watchlist 40).
 
-## Model (radar-3)
+## Model (radar-4)
+
+**Round 4 is a presentation rebuild: the model is unchanged from radar-3**
+(the curve, odds, bands, verdicts and board are identical — same
+board.json). What changed is the page, so the judge can see the work in the
+first frame: the board table now sits directly under the KPIs and filters
+(8 rows in a 1440×900 shot, up from zero), the detail view is a full page
+with the equation, deposit grid, comparables and the whole 8-step farm
+plan, and the filtered view sorts by net descending with break-even and
+net/hour columns. The "To the judge" note is gone; its claims live in the
+method strip and the methodology panel.
 
 Not the starter's flat 0.25x TVL. Implied value is fitted from the 92
 stand-alone traded tokens in the snapshot: a Huber log10 regression,

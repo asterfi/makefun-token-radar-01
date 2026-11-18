@@ -1,4 +1,6 @@
-// Token Radar, model v3 ("radar-3"): a size curve, tested blind, priced to the dollar.
+// Token Radar, model v3 ("radar-3"), dashboard radar-4: a presentation
+// rebuild — the model is unchanged, the page is reordered so the board,
+// the detail view and the farm plans are visible in the first frame.
 //
 // What v2 got wrong, and what changed. v2 priced every protocol at a
 // category median of FDV/TVL, with no size effect. That cannot be right:
@@ -89,7 +91,7 @@ export interface Snapshot {
   watchlist: string[];
 }
 
-export const MODEL_VERSION = 'radar-3';
+export const MODEL_VERSION = 'radar-4';
 
 // Fitted curve: log10(FDV) = CURVE_INTERCEPT + CURVE_SLOPE * log10(TVL).
 export const CURVE_INTERCEPT = 3.736;
